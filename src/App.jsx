@@ -4,15 +4,13 @@ function App() {
   const [activeKey, setActiveKey] = useState(null)
   const audioRef = useRef({})
 
-  const container = `bg-neutral-200 min-h-screen flex flex-col`
   const soundsContainer = `grid grid-cols-3 gap-12 m-auto bg-gradient-to-br p-16
                            from-neutral-600 via-neutral-500 to-neutral-600 rounded-lg
-                           shadow-lg shadow-neutral-800/30 w-11/12 md:w-10/12
-                           `
+                           shadow-lg shadow-neutral-800/30 w-11/12 md:w-10/12`
   const btn = `py-5 px-8 text-neutral-300 font-bold
                rounded-lg shadow-lg shadow-neutral-300/30
-               transition-transform duration-150 hover:scale-110 `
-  const span = ``
+               transition-transform duration-150 hover:scale-110 active:scale-95`
+  const btnBg = `bg-gradient-to-b from-neutral-700 to-neutral-600`
 
   const sounds = [
     {key : "Q", label : "Boom", src : "/sounds/boom.wav", color : "bg-lime-300"},
@@ -47,14 +45,18 @@ function App() {
 
 
   const soundsBtn = sounds.map(s => (
-    <button className={`${btn} ${activeKey === s.key ? `${s.color} scale-95` : "bg-gradient-to-b from-neutral-700 to-neutral-600"}`} key={s.key} onClick={() => playSound(s.key)}>
-      <span className={span}>{s.key}</span> {s.label}
+    <button 
+      className={`${btn} ${activeKey === s.key ? `${s.color} scale-95` : btnBg}`} 
+      key={s.key} 
+      onClick={() => playSound(s.key)}
+    >
+      <span>({s.key})</span> {s.label}
       <audio ref={el => (audioRef.current[s.key] = el)} src={s.src}/>
     </button>
   ))
 
   return (
-    <div className={container} >
+    <div className="bg-neutral-200 min-h-screen flex flex-col" >
         <div className={soundsContainer}>
           {soundsBtn}
         </div>
